@@ -8,7 +8,7 @@ class HomePageController extends Controller {
 	
 	
     public function index(Request $request)	{
-		return view("layout.template");
+		return view("home");
 	}
 	
 	public function about(){
