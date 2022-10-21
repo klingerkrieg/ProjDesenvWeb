@@ -2,7 +2,9 @@
 
 @section('content')
 	
-	<h1>Contact</h1>
+	<h1>Home</h1>
+
+	Novamente um texto qualquer...
 	
 @endsection
 
