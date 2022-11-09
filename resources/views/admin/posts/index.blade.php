@@ -18,14 +18,8 @@
                             <label for="subject" class="col-md-4 col-form-label text-md-end">{{ __('Subject') }}</label>
 
                             <div class="col-md-6">
-                                <input id="subject" type="text" class="form-control @error('subject') is-invalid @enderror"
-                                        name="subject" value="{{ old('subject') }}" required autofocus>
-
-                                @error('subject')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="subject" type="text" class="form-control"
+                                        name="subject" value="{{ old('subject') }}" autofocus>
                             </div>
                         </div>
 
@@ -35,14 +29,8 @@
                             <label for="publish_date" class="col-md-4 col-form-label text-md-end">{{ __('Publish date') }}</label>
 
                             <div class="col-md-6">
-                                <input id="publish_date" type="date" class="form-control @error('publish_date') is-invalid @enderror"
-                                        name="publish_date" value="{{ old('publish_date') }}" required>
-
-                                @error('publish_date')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="publish_date" type="date" class="form-control"
+                                        name="publish_date" value="{{ old('publish_date') }}">
                             </div>
                         </div>
 
@@ -53,15 +41,9 @@
 
                             <div class="col-md-6">
 
-                                <input id="text" name="text" class="form-control @error('text') is-invalid @enderror"
+                                <input id="text" name="text" class="form-control"
                                         type="text"
                                         value="{{ old('text') }}">
-
-                                @error('text')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
 

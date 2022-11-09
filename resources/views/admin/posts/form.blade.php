@@ -10,9 +10,11 @@
                 <div class="card-body">
 
                     @if ($data->id == "")
-                        <form method="POST" action="{{ route('post.store') }}">
+                        <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
+
                     @else
-                        <form method="POST" action="{{ route('post.update',$data) }}">
+                        <form method="POST" action="{{ route('post.update',$data) }}" enctype="multipart/form-data">
+
                         @method('PUT')
                     @endif
 
@@ -59,6 +61,11 @@
                                 <input id="image" type="file" class="form-control @error('image') is-invalid @enderror"
                                         name="image" value="{{ old('image') }}" >
 
+                                @if ($data->id)
+                                    <img src="{{asset($data->image)}}" class="rounded" width='200'/>
+                                @endif
+
+
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -72,14 +79,8 @@
                             <label for="slug" class="col-md-4 col-form-label text-md-end">{{ __('Slug') }}</label>
 
                             <div class="col-md-6">
-                                <input id="slug" type="text" class="form-control @error('slug') is-invalid @enderror"
-                                        name="slug" value="{{ old('slug') }}"  >
-
-                                @error('slug')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="slug" type="text" class="form-control "
+                                       readonly disabled value="{{ old('slug',$data->slug) }}"  >
                             </div>
                         </div>
 

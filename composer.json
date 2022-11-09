@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
+        "funkjedi/composer-include-files": "^1.1",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
@@ -51,12 +52,18 @@
     "extra": {
         "laravel": {
             "dont-discover": []
-        }
+        },
+        "include_files": [
+            "app/helper.php"
+        ]
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "funkjedi/composer-include-files": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

@@ -10,7 +10,19 @@ use Illuminate\Support\Facades\Validator;
 class PostController extends Controller {
 
     public function list(Request $request){
-        return view("admin.posts.index", ["listaPaginada"=>Post::paginate(3)]);
+        $pagination = Post::orderBy("subject");
+
+        if (isset($request->subject))
+            #porcentagem faz com que busque por parte do texto
+            $pagination->where("subject","like","%$request->subject%");
+        if (isset($request->text))
+            $pagination->where("text","like","%$request->text%");
+        if (isset($request->publish_date))
+            $pagination->whereDate("publish_date",$request->publish_date);
+
+        #$pagination->dd();
+        #$pagination->dump();
+        return view("admin.posts.index", ["listaPaginada"=>$pagination->paginate(3)]);
     }
 
     public function create(){
@@ -18,19 +30,46 @@ class PostController extends Controller {
     }
 
 
-    public function validator(array $data){
-        return Validator::make($data, [
+    public function validator(Request $request){
+
+        $rules = [
             'subject' => 'required|max:250',
             'publish_date' => 'required|date',
             'text' => 'required|max:8000',
-            'slug' => 'required',#por enquanto
-            'image' => 'required',#por enquanto
-        ]);
+        ];
+
+        #somente obrigatório quando for um novo
+        if ($request->method() == "POST"){
+            $rules['image'] = 'required|image|max:1024';
+        } else
+        if ($request->method() == "PUT"){
+            $rules['image'] = 'image|max:1024';
+        }
+
+        return Validator::make($request->all(), $rules);
+    }
+
+    private function armazenaImagem(Request $request){
+        #SALVA A IMAGEM NA PASTA
+        $data = $request->all();
+        if ($request->file('image') != null){
+            $path = $request->file('image')->store("posts","public");
+            #nao pode setar o photo do $request, pois nao irá funcionar
+            $data["image"] = $path;
+        }
+        return $data;
     }
 
     public function store(Request $request){
-        $validated = $this->validator($request->all())->validate();
-        $obj = Post::create($request->all());
+
+        #Valida todos os campos
+        $validated = $this->validator($request)->validate();
+
+        #Salva a imagem na pasta
+        $data = $this->armazenaImagem($request);
+
+        #Salva no banco
+        $obj = Post::create($data);
         return redirect(route("post.edit", $obj))->with("success",__("Data saved!"));
     }
 
@@ -46,8 +85,13 @@ class PostController extends Controller {
 
     #salva as edições
     public function update(Post $post, Request $request) {
-        $validated = $this->validator($request->all())->validate();
-        $post->update($request->all());
+        $validated = $this->validator($request)->validate();
+
+        #Salva a imagem na pasta
+        $data = $this->armazenaImagem($request);
+
+        #Salva no banco
+        $post->update($data);
         return redirect()->back()->with("success",__("Data updated!"));
     }
 

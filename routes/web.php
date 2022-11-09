@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Auth;
 
 #paginas externas
 Route::get('/', [HomePageController::class,"index"])->name('home_page');
@@ -14,6 +15,8 @@ Route::get('/contact', [ContactController::class,"index"])->name('contact');
 
 #paginas internas
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+#Route::get('/post/{slug}',    [App\Http\Controllers\PostController::class,"index"])->name('post');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/post/list', [PostController::class,"list"])->name('post.list');
