@@ -1,0 +1,31 @@
+{
+    "Description" : "Descrição",
+    "Name":"Nome",
+    "Search":"Pesquisar",
+    "E-Mail Address":"Endereço de E-mail",
+    "Password":"Senha",
+    "Remember Me":"Lembrar de mim",
+    "Forgot Your Password?":"Esqueceu sua senha?",
+    "Login":"Entrar",
+    "Register":"Cadastre-se",
+    "Categories":"Categorias",
+    "Category":"Categoria",
+    "Create category":"Criar categoria",
+    "Edit":"Editar",
+    "Delete":"Deletar",
+    "Save":"Salvar",
+    "Post":"Postagem",
+    "Posts":"Postagens",
+    "New Post":"Nova Postagem",
+    "Publish date":"Data de publicação",
+    "Text":"Texto",
+    "Image":"Imagem",
+    "Subject":"Assunto",
+    "subject":"Assunto",
+    "Yes":"Sim",
+    "Cancel":"Cancelar",
+    "Confirm":"Confirmação",
+    "Do you really want to delete this record?":"Deseja realmente excluir este registro?"
+}
+
+

@@ -64,31 +64,43 @@
                     </form>
 
 
-                    <ul>
-
-                        @foreach ($listaPaginada as $item)
-                        <li>
-
-                            <a href="{{route("post.edit",$item)}}" class="btn btn-primary">
-                                {{ __('Edit') }}
-                            </a>
-
-
-                            {{$item->subject}} | {{$item->slug}} | {{$item->text}} |
-
-                            <form action="{{route('post.destroy',$item)}}" method="post">
-                                @csrf
-                                @method("DELETE")
-                                <button type="submit" class="btn btn-danger">
-                                    {{ __('Delete') }}
-                                </button>
-                            </form>
-                        </li>
-                        @endforeach
-                    </ul>
-                    {{ $listaPaginada->links() }}
-
-
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">{{__("Subject")}}</th>
+                            <th scope="col">{{__("Slug")}}</th>
+                            <th scope="col">{{__("Text")}}</th>
+                            <th scope="col"> </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($listaPaginada as $item)
+                            <tr>
+                                <th scope="row">
+                                    <a href="{{route("post.edit",$item)}}" class="btn btn-primary">
+                                        {{ __('Edit') }}
+                                    </a>
+                                </th>
+                                <td>{{$item->subject}}</td>
+                                <td>{{$item->slug}}</td>
+                                <td>{{$item->text}}</td>
+                                <td>
+                                    <form action="{{route('post.destroy',$item)}}" method="post">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="button" onclick="confirmDeleteModal(this)"  class="btn btn-danger">
+                                            {{ __('Delete') }}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                      </table>
+                      <div class="d-flex justify-content-center">
+                            {{ $listaPaginada->links() }}
+                      </div>
 
 
                 </div>

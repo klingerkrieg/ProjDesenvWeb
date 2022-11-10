@@ -10,11 +10,10 @@
                 <div class="card-body">
 
                     @if ($data->id == "")
-                        <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
+                        <form id="main" method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
 
                     @else
-                        <form method="POST" action="{{ route('post.update',$data) }}" enctype="multipart/form-data">
-
+                        <form id="main" method="POST" action="{{ route('post.update',$data) }}" enctype="multipart/form-data">
                         @method('PUT')
                     @endif
 
@@ -99,17 +98,34 @@
                                 @enderror
                             </div>
                         </div>
-
+                    </form>
 
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" form="main">
                                     {{ __('Save') }}
                                 </button>
+
+                                <a class="btn btn-secondary" href='{{route("post.create")}}'>
+                                    {{ __('New Post') }}
+                                </a>
+
+
+                                @if ($data->id != "")
+                                <form name='delete' action="{{route('post.destroy',$data)}}"
+                                    method="post"
+                                    style='display: inline-block;'>
+                                    @csrf
+                                    @method("DELETE")
+                                    <button type="button" onclick="confirmDeleteModal(this)" class="btn btn-danger">
+                                        {{ __('Delete') }}
+                                    </button>
+                                </form>
+                                @endif
                             </div>
                         </div>
-                    </form>
+
 
 
 

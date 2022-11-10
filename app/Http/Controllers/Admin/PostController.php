@@ -22,7 +22,7 @@ class PostController extends Controller {
 
         #$pagination->dd();
         #$pagination->dump();
-        return view("admin.posts.index", ["listaPaginada"=>$pagination->paginate(3)]);
+        return view("admin.posts.index", ["listaPaginada"=>$pagination->paginate(5)]);
     }
 
     public function create(){
