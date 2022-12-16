@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -41,4 +40,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Relacionamento
+     * UM para MUITOS
+     */
+    public function posts(){
+                    # temMuitos
+        return $this->hasMany(Post::class);
+    }
+
 }

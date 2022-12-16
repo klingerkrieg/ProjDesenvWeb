@@ -5,45 +5,33 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Posts') }}</div>
+                <div class="card-header">{{ __('Users') }}</div>
 
                 <div class="card-body">
 
-                    <form method="GET" action="{{ route('post.list') }}">
+                    <form method="GET" action="{{ route('user.list') }}">
                         @csrf
 
 
 
                         <div class="row mb-3">
-                            <label for="subject" class="col-md-4 col-form-label text-md-end">{{ __('Subject') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="subject" type="text" class="form-control"
-                                        name="subject" value="{{ old('subject') }}" autofocus>
+                                <input id="name" type="text" class="form-control"
+                                        name="name" value="{{ old('name') }}" autofocus>
                             </div>
                         </div>
 
 
-
                         <div class="row mb-3">
-                            <label for="publish_date" class="col-md-4 col-form-label text-md-end">{{ __('Publish date') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="publish_date" type="date" class="form-control"
-                                        name="publish_date" value="{{ old('publish_date') }}">
-                            </div>
-                        </div>
-
-
-
-                        <div class="row mb-3">
-                            <label for="text" class="col-md-4 col-form-label text-md-end">{{ __('Text') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-mail') }}</label>
 
                             <div class="col-md-6">
 
-                                <input id="text" name="text" class="form-control"
+                                <input id="email" name="email" class="form-control"
                                         type="text"
-                                        value="{{ old('text') }}">
+                                        value="{{ old('email') }}">
                             </div>
                         </div>
 
@@ -56,7 +44,7 @@
                                 </button>
 
 
-                                <a class="btn btn-link" href="{{ route('post.create') }}">
+                                <a class="btn btn-link" href="{{ route('user.create') }}">
                                     {{ __('Cadastrar novo') }}
                                 </a>
                             </div>
@@ -68,10 +56,9 @@
                         <thead>
                           <tr>
                             <th scope="col"> </th>
-                            <th scope="col">{{__("Subject")}}</th>
-                            <th scope="col">{{__("Slug")}}</th>
-                            <th scope="col">{{__("Text")}}</th>
-                            <th scope="col">{{__("Owner")}}</th>
+                            <th scope="col">{{__("Name")}}</th>
+                            <th scope="col">{{__("E-mail")}}</th>
+                            <th scope="col">{{__("Posts count")}}</th>
                             <th scope="col"> </th>
                           </tr>
                         </thead>
@@ -79,16 +66,15 @@
                             @foreach ($listaPaginada as $item)
                             <tr>
                                 <th scope="row">
-                                    <a href="{{route("post.edit",$item)}}" class="btn btn-primary">
+                                    <a href="{{route("user.edit",$item)}}" class="btn btn-primary">
                                         {{ __('Edit') }}
                                     </a>
                                 </th>
-                                <td>{{$item->subject}}</td>
-                                <td>{{$item->slug}}</td>
-                                <td>{{$item->text}}</td>
-                                <td>{{$item->user->name }}</td>
+                                <td>{{$item->name}}</td>
+                                <td>{{$item->email}}</td>
+                                <td>{{$item->posts->count()}}</td>
                                 <td>
-                                    <form action="{{route('post.destroy',$item)}}" method="post">
+                                    <form action="{{route('user.destroy',$item)}}" method="user">
                                         @csrf
                                         @method("DELETE")
                                         <button type="button" onclick="confirmDeleteModal(this)"  class="btn btn-danger">

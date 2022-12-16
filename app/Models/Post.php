@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Models;
-
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,12 +15,24 @@ class Post extends Model {
         "image",
         "subject", #assunto
         "text",
-        "slug"
+        "slug",
+        "user_id"
     ];
 
     protected $dates = [
         "publish_date"
     ];
+
+
+    /**
+     * Relacionamento
+     * MUITOS para UM
+     */
+    public function user(){
+                    #pertenceA
+        return $this->belongsTo(User::class);
+    }
+
 
 
     #               set[NOMEDOATRIBUTO]Attribute

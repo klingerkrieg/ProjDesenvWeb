@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller {
@@ -67,6 +68,9 @@ class PostController extends Controller {
 
         #Salva a imagem na pasta
         $data = $this->armazenaImagem($request);
+
+        #Pega a id do usuario que está logado
+        $data["user_id"] = Auth::user()->id;
 
         #Salva no banco
         $obj = Post::create($data);
