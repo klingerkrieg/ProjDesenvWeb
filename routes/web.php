@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,12 +32,20 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/post/{post}', [PostController::class,"destroy"])->name('post.destroy');
 
 
-    Route::get('/user/list', [Usercontroller::class,"list"])->name('user.list');
-    Route::get('/user/form', [Usercontroller::class,"create"])->name('user.create');
-    Route::post('/user', [Usercontroller::class,"store"])->name('user.store');
-    Route::get('/user/{user}', [Usercontroller::class,"edit"])->name('user.edit');
-    Route::put("/user/{user}", [Usercontroller::class,"update"])->name('user.update');
-    Route::delete('/user/{user}', [Usercontroller::class,"destroy"])->name('user.destroy');
+    Route::get('/user/list', [UserController::class,"list"])->name('user.list');
+    Route::get('/user/form', [UserController::class,"create"])->name('user.create');
+    Route::post('/user', [UserController::class,"store"])->name('user.store');
+    Route::get('/user/{user}', [UserController::class,"edit"])->name('user.edit');
+    Route::put("/user/{user}", [UserController::class,"update"])->name('user.update');
+    Route::delete('/user/{user}', [UserController::class,"destroy"])->name('user.destroy');
+
+    Route::get('/category/list', [CategoryController::class,"list"])->name('category.list');
+    Route::get('/category/form', [CategoryController::class,"create"])->name('category.create');
+    Route::post('/category', [CategoryController::class,"store"])->name('category.store');
+    Route::get('/category/{category}', [CategoryController::class,"edit"])->name('category.edit');
+    Route::put("/category/{category}", [CategoryController::class,"update"])->name('category.update');
+    Route::delete('/category/{category}', [CategoryController::class,"destroy"])->name('category.destroy');
+    Route::get('/category/desvincular/{category_post}', [CategoryController::class,"desvincular"])->name('category.desvincular');
 });
 
 
