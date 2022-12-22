@@ -112,6 +112,50 @@
                                 @enderror
                             </div>
                         </div>
+
+
+                        <div class="row mb-3">
+                            <label for="category_id" class="col-md-4 col-form-label text-md-end">
+                                {{ __('Categories') }}</label>
+
+                            <div class="col-md-6">
+                            <select class="form-select @error('category_id') is-invalid @enderror"
+                                    id="category_id"
+                                    name="category_id" >
+                                    <option value=''>{{__("Select one option")}}</option>
+                                @foreach($categoryList as $category)
+
+                                    <option value='{{$category->id}}'
+                                        @if (old('category_id',$data->category_id) == $category->id)
+                                            selected
+                                        @endif
+                                        >{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            </div>
+                        </div>
+
+
+
+                        @if($data->exists)
+                            <ol>
+                            @foreach ($categories as $cat)
+                            <li>
+                                <a href='{{route('category.edit',$cat)}}'>{{ $cat->name }}</a>
+                                <a href="{{route('category.desvincular',$cat->category_posts_id)}}">Desvincular</a>
+                            </li>
+                            @endforeach
+                            </ol>
+                        {{-- comente a linha a seguir, se nao tiver usado paginação --}}
+                        {{ $categories->links() }}
+                        @endif
+
+
                     </form>
 
 

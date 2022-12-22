@@ -12,13 +12,13 @@
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
-		
-		
+
+
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('clean-blog/css/styles.css')}}" rel="stylesheet" />
-		
-		
-		
+
+
+
     </head>
     <body>
         <!-- Navigation-->
@@ -32,6 +32,14 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('home_page')}}">Home</a></li>
+
+                        @isset($categoryListOfAllViews)
+                            @foreach ($categoryListOfAllViews as $cat)
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">{{$cat->name}}</a></li>
+                            @endforeach
+                        @endif
+
+
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('about')}}">About</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('post')}}">Sample Post</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('contact')}}">Contact</a></li>
@@ -53,18 +61,18 @@
                 </div>
             </div>
         </header>
-        
+
 		<div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-		            
+
                     @yield('content')
 
                 </div>
             </div>
         </div>
-		
-		
+
+
         <!-- Footer-->
         <footer class="border-top">
             <div class="container px-4 px-lg-5">

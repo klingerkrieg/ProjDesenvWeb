@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\CategoryPost;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,9 @@ class PostController extends Controller {
     }
 
     public function create(){
-        return view("admin.posts.form",["data"=>new Post()]);
+        $categoryList = Category::all();
+        return view("admin.posts.form",["data"=>new Post(),
+                                        "categoryList"=>$categoryList]);
     }
 
 
@@ -73,8 +77,15 @@ class PostController extends Controller {
         $data["user_id"] = Auth::user()->id;
 
         #Salva no banco
-        $obj = Post::create($data);
-        return redirect(route("post.edit", $obj))->with("success",__("Data saved!"));
+        $post = Post::create($data);
+
+        #RELACIONAMENTO
+        $category = Category::find($request["category_id"]);
+        if ($category != null){
+            CategoryPost::create(["post_id"=>$post->id,"category_id"=>$category->id]);
+        }
+
+        return redirect(route("post.edit", $post))->with("success",__("Data saved!"));
     }
 
     public function destroy(Post $post){
@@ -84,7 +95,17 @@ class PostController extends Controller {
 
     #abre o formulario de edição
     public function edit(Post $post){
-        return view("admin.posts.form",["data"=>$post]);
+        $categoryList = Category::all();
+
+
+        $categories = Category::select("categories.*", "category_posts.id as category_posts_id")
+                    ->join("category_posts","category_posts.category_id","=","categories.id")
+                    ->where("post_id",$post->id)->paginate(2);#->dd(); se tiver duvida no sql, retire o paginate e deixe o dd()
+
+
+        return view("admin.posts.form",["data"=>$post,
+                                        "categories"=>$categories,
+                                        "categoryList"=>$categoryList]);
     }
 
     #salva as edições
@@ -96,6 +117,14 @@ class PostController extends Controller {
 
         #Salva no banco
         $post->update($data);
+
+
+        #RELACIONAMENTO
+        $category = Category::find($request["category_id"]);
+        if ($category != null){
+            CategoryPost::create(["post_id"=>$post->id,"category_id"=>$category->id]);
+        }
+
         return redirect()->back()->with("success",__("Data updated!"));
     }
 
