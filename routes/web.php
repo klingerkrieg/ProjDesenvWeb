@@ -22,16 +22,26 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/post/open/{post:slug}',[App\Http\Controllers\PostController::class,"get"])->name('post.open');
 
 
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/post/list', [PostController::class,"list"])->name('post.list');
+#Tem que vir primeiro
+Route::middleware(['auth', 'can:create,App\Models\Post'])->group(function () {
     Route::get('/post/form', [PostController::class,"create"])->name('post.create');
     Route::post('/post', [PostController::class,"store"])->name('post.store');
+});
+#Tem que vir em segundo
+Route::middleware(['auth', 'can:viewAny,App\Models\Post'])->group(function () {
+    Route::get('/post/list', [PostController::class,"list"])->name('post.list');
     Route::get('/post/{post}', [PostController::class,"edit"])->name('post.edit');
+});
+#Por último, pode ficar agrupado porque as regras de deletar e update são muito parecidas
+Route::middleware(['auth', 'can:update,post',
+                            'can:delete,post',])->group(function () {
     Route::put("/post/{post}", [PostController::class,"update"])->name('post.update');
     Route::delete('/post/{post}', [PostController::class,"destroy"])->name('post.destroy');
+});
 
 
+
+Route::middleware(['auth','can:admin-access'])->group(function () {
     Route::get('/user/list', [UserController::class,"list"])->name('user.list');
     Route::get('/user/form', [UserController::class,"create"])->name('user.create');
     Route::post('/user', [UserController::class,"store"])->name('user.store');

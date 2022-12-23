@@ -57,15 +57,20 @@
                             @endif
                         @else
 
+                        @can('viewAny', App\Models\Post::class)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('post.list') }}">{{ __('Posts') }}</a>
                         </li>
+                        @endcan
+
+                        @can('admin-access')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('category.list') }}">{{ __('Categories') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('user.list') }}">{{ __('Users') }}</a>
                         </li>
+                        @endcan
 
 
 

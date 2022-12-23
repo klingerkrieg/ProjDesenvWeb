@@ -88,6 +88,7 @@
                                 <td>{{$item->text}}</td>
                                 <td>{{$item->user->name }}</td>
                                 <td>
+                                    @can('delete', $item)
                                     <form action="{{route('post.destroy',$item)}}" method="post">
                                         @csrf
                                         @method("DELETE")
@@ -95,6 +96,7 @@
                                             {{ __('Delete') }}
                                         </button>
                                     </form>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach

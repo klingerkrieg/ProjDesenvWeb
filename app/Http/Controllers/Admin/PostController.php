@@ -8,12 +8,13 @@ use App\Models\CategoryPost;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller {
 
     public function list(Request $request){
-        $pagination = Post::orderBy("subject");
+        $pagination = Post::orderBy("subject");#->where('user_id',Auth::user()->id);
 
         if (isset($request->subject))
             #porcentagem faz com que busque por parte do texto
@@ -95,6 +96,8 @@ class PostController extends Controller {
 
     #abre o formulario de edição
     public function edit(Post $post){
+        #Gate::authorize('update', $post);
+
         $categoryList = Category::all();
 
 
@@ -110,6 +113,9 @@ class PostController extends Controller {
 
     #salva as edições
     public function update(Post $post, Request $request) {
+
+        #Gate::authorize('update', $post);
+
         $validated = $this->validator($request)->validate();
 
         #Salva a imagem na pasta

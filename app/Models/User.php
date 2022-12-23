@@ -11,6 +11,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    const ADMIN_LEVEL = 30;
+    const AUTHOR_LEVEL = 20;
+    const DEFAULT_LEVEL = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'level',
     ];
 
     /**
@@ -49,6 +55,10 @@ class User extends Authenticatable
     public function posts(){
                     # temMuitos
         return $this->hasMany(Post::class);
+    }
+
+    public function isAdministrator(){
+        return $this->level == User::ADMIN_LEVEL;
     }
 
 }
