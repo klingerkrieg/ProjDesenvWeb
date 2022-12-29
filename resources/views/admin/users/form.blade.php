@@ -60,6 +60,9 @@
                         {{ $posts->links() }}
 
 
+                        @include('admin.users.address')
+
+
                     </form>
 
 

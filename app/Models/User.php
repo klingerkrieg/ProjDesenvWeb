@@ -57,6 +57,12 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function address(){
+                    #hasOne
+        return $this->hasOne(Address::class);
+    }
+
+
     public function isAdministrator(){
         return $this->level == User::ADMIN_LEVEL;
     }

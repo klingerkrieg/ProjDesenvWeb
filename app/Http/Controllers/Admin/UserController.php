@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -31,8 +32,15 @@ class UserController extends Controller {
     public function validator(Request $request){
 
         $rules = [
-            'name' => 'required|max:250',
-            'email' => 'required|email',
+            'name'          => 'required|max:250',
+            'email'         => 'required|email',
+            "cep"           => "regex:/[0-9]{5}\-[0-9]{3}/",
+            "number"        => "required|string",
+            "street"        => "required|string",
+            "complement"    => "nullable|string",
+            "district"      => "required|string",
+            "city"          => "required|string",
+            "state"         => "required|string",
         ];
 
         return Validator::make($request->all(), $rules);
@@ -47,6 +55,13 @@ class UserController extends Controller {
         #Salva no banco
         $data = $request->all();
         $obj = User::create($data);
+
+
+        #salvar o endereço
+        $validated["user_id"] = $obj->id;
+        Address::updateOrCreate($validated);
+
+
         return redirect(route("user.edit", $obj))->with("success",__("Data saved!"));
     }
 
@@ -70,6 +85,11 @@ class UserController extends Controller {
         #Salva no banco
         $data = $request->all();
         $user->update($data);
+
+        #salvar o endereço
+        $validated["user_id"] = $user->id;
+        Address::updateOrCreate($validated);
+
         return redirect()->back()->with("success",__("Data updated!"));
     }
 
