@@ -14,6 +14,7 @@ Route::get('/',        [HomePageController::class,"index"])->name('home_page');
 Route::get('/about',   [HomePageController::class,"about"])->name('about');
 Route::get('/post',    [App\Http\Controllers\PostController::class,"index"])->name('post');
 Route::get('/contact', [ContactController::class,"index"])->name('contact');
+Route::get('verificar_email/{email}', [App\Http\Controllers\UserController::class,"verifyEmail"])->name("verify_email");
 
 #paginas internas
 Route::get('/home', [HomeController::class, 'index'])->name('home');

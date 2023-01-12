@@ -44,9 +44,9 @@
                                 </button>
 
 
-                                <a class="btn btn-link" href="{{ route('user.create') }}">
+                                {{--<a class="btn btn-link" href="{{ route('user.create') }}">
                                     {{ __('Cadastrar novo') }}
-                                </a>
+                                </a>--}}
                             </div>
                         </div>
                     </form>
