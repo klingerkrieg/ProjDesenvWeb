@@ -5,3 +5,8 @@ $body-bg: #f8fafc;
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+//aumenta o contraste, fazendo com que o texto fique branco
+$min-contrast-ratio: 2;
+$primary:#40ab22;
+$danger:rgb(239, 129, 85);
